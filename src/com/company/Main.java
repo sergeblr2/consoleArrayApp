@@ -3,6 +3,7 @@ package com.company;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -24,14 +25,11 @@ public class Main {
             }
         }
         ints.removeAll(Arrays.asList(0));
-       while(count > 0) {
+        while(count > 0) {
             ints.add(0);
             count--;
         }
         System.out.println(ints);
-        System.out.println("----------------------------------");
-
-
 
 
        //second version via iterator
@@ -45,12 +43,18 @@ public class Main {
                 count++;
             }
         }
-
         while(count > 0) {
             ints2.add(0);
             count--;
         }
-
         System.out.println(ints2);
+
+
+        // third via streams
+        ArrayList<Integer> ints3 = new ArrayList<>(Arrays.asList(3, 0, 1, 0, 2));
+        ints3 = ints3.stream()
+                .sorted((i1, i2) -> i1.equals(new Integer(0)) ? 1 : i2.equals(0) ? -1 : 0)
+                .collect(Collectors.toCollection(ArrayList::new));
+        System.out.println(ints3);
     }
 }
